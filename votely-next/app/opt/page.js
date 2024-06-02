@@ -10,7 +10,6 @@ export default function Opt() {
   useEffect(() => {
     (async () => {
       const { data } = await axios.get('http://localhost:3001/category')
-      console.log({data})
       setCategories(data)
     })()
   }, []);
