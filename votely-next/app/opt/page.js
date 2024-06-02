@@ -1,22 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Opt() {
   const [categories, setCategories] = useState([]);
 
   // Fungsi untuk mendapatkan data kategori dan memperbarui state
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getCategoryData(); // Panggil fungsi untuk mendapatkan data kategori dari Prisma
-        setCategories(data); // Set data kategori ke dalam state
-      } catch (error) {
-        console.error("Error fetching category data:", error);
-      }
-    };
-
-    fetchData(); // Panggil fungsi untuk mengambil data kategori saat komponen dimuat
+    (async () => {
+      const { data } = await axios.get('http://localhost:3001/category')
+      console.log({data})
+      setCategories(data)
+    })()
   }, []);
 
   return (
@@ -51,8 +47,8 @@ export default function Opt() {
                   </option>
                   {/* Render opsi dropdown berdasarkan data kategori */}
                   {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
+                    <option key={category.id_category} value={category.id_category}>
+                      {category.name_category}
                     </option>
                   ))}
                 </select>
