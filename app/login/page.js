@@ -1,18 +1,25 @@
 "use client";
-import React, { useState } from "react";
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
+  const onSubmit = async (data) => {
     try {
-      // Perform login process here
-      console.log("Login process with SSO...");
+      const response = await axios.post("http://localhost:3001/login", data);
+      console.log(response.data);
+      alert("Login successful!");
+      // Redirect user to homepage or dashboard after login
+      window.location.href = "/homepage";
     } catch (error) {
-      console.error("Error during login:", error);
+      alert("Login failed! Incorrect email or password.");
+      console.error("Login error:", error);
     }
   };
 
@@ -20,49 +27,35 @@ function Login() {
     <div>
       <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
       <script src="https://cdn.tailwindcss.com"></script>
-      <div className="navbar bg-black text-white">
-        <div className="navbar-start">
-          <div className="dropdown"></div>
-          <a href="/homepage" className="btn btn-ghost text-xl">
-            VOTELY
-          </a>{" "}
-        </div>
-        <div className="navbar-center hidden lg:flex"></div>
-        <div className="navbar-end"></div>
-      </div>
-
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold text-black">Login With SSO!</h1>
-            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+      <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+          <div class="text-center lg:text-left">
+            <h1 class="text-5xl font-bold text-black">Login With SSO!</h1>
+            <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
           </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form className="card-body" onSubmit={handleSubmit}>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
+          <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <form class="card-body" onSubmit={handleSubmit(onSubmit)}>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Email</span>
                 </label>
-                <input type="email" name="email" placeholder="email" className="input input-bordered" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <input {...register("email", { required: true })} type="email" placeholder="email" class="input input-bordered" />
+                {errors.email && <p>Email is required.</p>}
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Password</span>
                 </label>
-                <input type="password" name="password" placeholder="password" className="input input-bordered" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">
-                    Forgot password?
-                  </a>
-                  <div>
-                    <a href="/register" className="label-text-alt link link-hover">
-                      Don't have an account?
-                    </a>
-                  </div>
-                </label>
+                <input {...register("password", { required: true })} type="password" placeholder="password" class="input input-bordered" />
+                {errors.password && <p>Password is required.</p>}
               </div>
-              <div className="form-control mt-6">
-                <button type="submit" className="btn btn-neutral bg-black text-white">
+              <div>
+                <p>
+                  Don't have account ? <a href="/register">Register now</a>
+                </p>
+              </div>
+              <div class="form-control mt-6">
+                <button type="submit" class="btn bg-black text-white">
                   Login
                 </button>
               </div>
@@ -73,5 +66,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

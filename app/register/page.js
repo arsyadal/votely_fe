@@ -1,93 +1,80 @@
 "use client";
-
-import React, { useState } from "react";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
-function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState(""); // Menambahkan state untuk name
+export default function Register() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async ({ email, password, name }) => {
+    const { data } = await axios.post("http://localhost:3001/register", {
+      email,
+      password,
+      name,
+    });
 
-    try {
-      const response = await axios.post("http://localhost:3001/register", {
-        email,
-        password,
-        name, // Menambahkan name ke dalam permintaan
-      });
-
-      if (response.data.success) {
-        // Registrasi berhasil
-        alert("Registration successful!");
-        console.log("Registration successful:", response.data.user);
-      } else {
-        // Registrasi gagal
-        alert(`Registration failed: ${response.data.error}`);
-        console.error("Registration failed:", response.data.error);
-      }
-    } catch (error) {
-      alert("Error registering user: " + error.message);
-      console.error("Error registering user:", error);
-    }
+    console.log({ data });
+    alert("Berhasil register");
   };
 
   return (
     <div>
       <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
       <script src="https://cdn.tailwindcss.com"></script>
-      <div className="navbar bg-black text-white">
-        <div className="navbar-start">
-          <div className="dropdown"></div>
-          <a href="/homepage" className="btn btn-ghost text-xl">
+      <div class="navbar bg-black text-white">
+        <div class="navbar-start">
+          <div class="dropdown"></div>
+          <a href="/homepage" class="btn btn-ghost text-xl">
             VOTELY
           </a>{" "}
         </div>
-        <div className="navbar-center hidden lg:flex"></div>
-        <div className="navbar-end"></div>
+        <div class="navbar-center hidden lg:flex"></div>
+        <div class="navbar-end"></div>
       </div>
 
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold text-black">Register now!</h1>
-            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+      <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+          <div class="text-center lg:text-left">
+            <h1 class="text-5xl font-bold text-black">Register now!</h1>
+            <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
           </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form className="card-body" onSubmit={handleSubmit}>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
+          <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <form class="card-body" onSubmit={handleSubmit(onSubmit)}>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Username</span>
                 </label>
-                <input type="email" name="email" placeholder="email" className="input input-bordered" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <input {...register("name")} type="name" placeholder="username" class="input input-bordered" />
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Name</span>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Email</span>
                 </label>
-                <input type="text" name="name" placeholder="name" className="input input-bordered" value={name} onChange={(e) => setName(e.target.value)} required />
+                <input {...register("email")} type="email" placeholder="email" class="input input-bordered" />
               </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Password</span>
                 </label>
-                <input type="password" name="password" placeholder="password" className="input input-bordered" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">
+                <input {...register("password")} type="password" placeholder="password" class="input input-bordered" />
+                <label class="label">
+                  <a href="#" class="label-text-alt link link-hover">
                     Forgot password?
                   </a>
                   <div>
-                    <a href="/login" className="label-text-alt link link-hover">
+                    <a href="/login" class="label-text-alt link link-hover">
                       Have account?
                     </a>
                   </div>
                 </label>
               </div>
-              <div className="form-control mt-6">
-                <button type="submit" className="btn btn-neutral bg-black text-white">
-                  Register
+              <div class="form-control mt-6">
+                <button class="btn bg-black text-white" type="submit">
+                  Login
                 </button>
               </div>
             </form>
@@ -97,5 +84,3 @@ function Register() {
     </div>
   );
 }
-
-export default Register;
