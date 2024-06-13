@@ -40,7 +40,7 @@ function VoteCard({ onVote }) {
       <div className="flex justify-center bg-base-200 space-x-4 p-4">
         <div className="card w-96 bg-base-100 shadow-xl">
           <figure>
-            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
+            <img src="" alt="Shoes" />
           </figure>
           <div className="card-body">
             <h2 className="card-title">BATMAN</h2>
