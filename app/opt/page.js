@@ -47,6 +47,20 @@ export default function Opt() {
         >
           Tambah
         </button>
+        <button className="btn ml-3" onClick={()=>document.getElementById('my_modal_2').showModal()}>Tambah Kategori</button>
+<dialog id="my_modal_2" className="modal">
+  <div className="modal-box">
+    <h3 className="font-bold text-lg">Tambah Kategori</h3>
+    <input type="text" placeholder="Tambah kategori" class="input w-full max-w-xs" />
+    <button class="btn bg-black text-white ml-3">Submit</button>
+
+
+    <p className="py-4">Press ESC key or click outside to close</p>
+  </div>
+  <form method="dialog" className="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>        
         <dialog id="my_modal_2" class="modal">
           <div class="modal-box">
             <h3 class="font-bold text-lg">Masukkan pilihan</h3>
