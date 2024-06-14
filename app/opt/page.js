@@ -2,21 +2,31 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { parseCookies } from "nookies";
 
 export default function Opt() {
   const [categories, setCategories] = useState([]);
 
   // Fungsi untuk mendapatkan data kategori dan memperbarui state
   useEffect(() => {
+    const { access_token } = parseCookies();
     (async () => {
-      const { data } = await axios.get('http://localhost:3001/category')
-      setCategories(data)
-    })()
+      const { data } = await axios.get("http://localhost:3001/api/category", {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      setCategories([]);
+    })();
   }, []);
 
   return (
     <div>
-      <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+      <link
+        href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
+        rel="stylesheet"
+        type="text/css"
+      />
       <script src="https://cdn.tailwindcss.com"></script>
       <div class="navbar bg-black text-white">
         <div class="navbar-start">
@@ -31,7 +41,10 @@ export default function Opt() {
       </div>
 
       <div class="flex justify-center">
-        <button class="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>
+        <button
+          class="btn"
+          onClick={() => document.getElementById("my_modal_2").showModal()}
+        >
           Tambah
         </button>
         <dialog id="my_modal_2" class="modal">
@@ -40,13 +53,19 @@ export default function Opt() {
 
             <div class="form-control flex justify-center">
               <div class="flex justify-center">
-                <select id="category" class="select select-bordered w-full max-w-xs">
+                <select
+                  id="category"
+                  class="select select-bordered w-full max-w-xs"
+                >
                   <option disabled selected>
                     Pilih Kategori
                   </option>
                   {/* Render opsi dropdown berdasarkan data kategori */}
                   {categories.map((category) => (
-                    <option key={category.id_category} value={category.id_category}>
+                    <option
+                      key={category.id_category}
+                      value={category.id_category}
+                    >
                       {category.name_category}
                     </option>
                   ))}
@@ -68,7 +87,12 @@ export default function Opt() {
             </div>
             <div class="flex justify-center">
               <label class="input input-bordered flex w-96 items-center gap-2">
-                <input type="file" class="grow" accept="image/*" placeholder="Upload Photo" />
+                <input
+                  type="file"
+                  class="grow"
+                  accept="image/*"
+                  placeholder="Upload Photo"
+                />
               </label>
             </div>
 
