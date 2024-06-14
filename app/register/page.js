@@ -6,7 +6,6 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -20,7 +19,6 @@ export default function Register() {
     console.log({ data });
     alert("Berhasil register");
   };
-
   return (
     <div>
       <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
@@ -73,8 +71,8 @@ export default function Register() {
                 </label>
               </div>
               <div class="form-control mt-6">
-                <button class="btn bg-black text-white" type="submit">
-                  Login
+                <button className="btn bg-black text-white" type="submit">
+                  Register
                 </button>
               </div>
             </form>

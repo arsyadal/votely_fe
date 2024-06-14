@@ -16,7 +16,7 @@ export default function Home() {
           <div class="max-w-md">
             <h1 class="text-5xl font-bold">MARI LAKUKAN VOTING</h1>
             <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-            <a href="/login" class="btn btn-neutral bg-black text-white">
+            <a href="/login" class="btn btn-black bg-black text-white">
               Get Started
             </a>
           </div>

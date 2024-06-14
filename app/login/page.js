@@ -49,12 +49,13 @@ export default function Login() {
                 <input {...register("password", { required: true })} type="password" placeholder="password" class="input input-bordered" />
                 {errors.password && <p>Password is required.</p>}
               </div>
-              <div>
-                <p>
-                  Don't have account ? <a href="/register">Register now</a>
-                </p>
-              </div>
-              <div class="form-control mt-6">
+              <p>
+                Don't have account?{" "}
+                <a href="/register" class="">
+                  Register
+                </a>
+              </p>
+              <div class="form-control">
                 <button type="submit" class="btn bg-black text-white">
                   Login
                 </button>
