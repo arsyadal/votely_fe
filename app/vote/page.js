@@ -22,7 +22,7 @@ export default function VoteCard() {
   const percentageVotes1 = totalVotes === 0 ? 0 : (votes[1] / totalVotes) * 100;
 
   // Tanggal akhir countdown (3 May 2024 23:59 PM)
-  const endTime = new Date("2024-06-03T23:59:00").getTime();
+  const endTime = new Date("2024-06-13T23:59:00").getTime();
 
   // Renderer untuk countdown
   const renderer = ({ days, hours, minutes, seconds }) => {
@@ -75,7 +75,9 @@ export default function VoteCard() {
             <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">BATMAN</h2>
+            <h2 className="card-title">SUPERMAN</h2>
+
+            <h2 className="card-title"></h2>
             <progress className="progress progress-black w-56" value={percentageVotes0} max="100"></progress>
             <p>Votes: {votes[0]}</p>
             <div className="card-actions justify-center">

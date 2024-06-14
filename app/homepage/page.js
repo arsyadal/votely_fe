@@ -2,6 +2,21 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+// Fungsi logout yang bisa diakses dari luar
+const logout = async () => {
+  try {
+    // Lakukan logika logout di sini, misalnya menghapus token autentikasi atau membersihkan sesi
+    console.log("Logged out!");
+    localStorage.removeItem("authToken");
+
+    // Kemudian redirect ke halaman login
+    window.location.href = "/login";
+  } catch (error) {
+    console.error("Error logging out:", error);
+  }
+};
+
 const Navbar = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -20,7 +35,7 @@ const Navbar = () => {
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img alt="Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <img alt="Avatar" src="" />
             </div>
           </div>
           <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 text-black">
