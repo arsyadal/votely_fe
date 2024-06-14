@@ -16,7 +16,7 @@ export default function Opt() {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      setCategories([]);
+      setCategories(data?.data || []);
     })();
   }, []);
 
