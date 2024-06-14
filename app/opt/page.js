@@ -3,13 +3,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 export default function Opt() {
   const [categories, setCategories] = useState([]);
+  const { access_token } = parseCookies();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { refresh } = useRouter();
 
   // Fungsi untuk mendapatkan data kategori dan memperbarui state
   useEffect(() => {
-    const { access_token } = parseCookies();
     (async () => {
       const { data } = await axios.get("http://localhost:3001/api/category", {
         headers: {
@@ -19,6 +27,24 @@ export default function Opt() {
       setCategories(data?.data || []);
     })();
   }, []);
+
+  const onSubmitCategory = async ({ category }) => {
+    try {
+      await axios.post(
+        "http://localhost:3001/api/category",
+        { category_name: category },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+      refresh();
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Login failed! Incorrect email or password.");
+    }
+  };
 
   return (
     <div>
@@ -47,24 +73,33 @@ export default function Opt() {
         >
           Tambah
         </button>
-        <button className="btn ml-3" onClick={()=>document.getElementById('my_modal_2').showModal()}>Tambah Kategori</button>
-<dialog id="my_modal_2" className="modal">
-  <div className="modal-box">
-    <h3 className="font-bold text-lg">Tambah Kategori</h3>
-    <input type="text" placeholder="Tambah kategori" class="input w-full max-w-xs" />
-    <button class="btn bg-black text-white ml-3">Submit</button>
-
-
-    <p className="py-4">Press ESC key or click outside to close</p>
-  </div>
-  <form method="dialog" className="modal-backdrop">
-    <button>close</button>
-  </form>
-</dialog>        
+        <button
+          className="btn ml-3"
+          onClick={() => document.getElementById("my_modal_2").showModal()}
+        >
+          Tambah Kategori
+        </button>
+        <dialog id="my_modal_2" className="modal">
+          <form className="modal-box" onSubmit={handleSubmit(onSubmitCategory)}>
+            <h3 className="font-bold text-lg">Tambah Kategori</h3>
+            <input
+              {...register("category", { required: true })}
+              type="text"
+              placeholder="Tambah kategori"
+              class="input w-full max-w-xs"
+            />
+            <button class="btn bg-black text-white ml-3" type="submit">
+              Submit
+            </button>
+            <p className="py-4">Press ESC key or click outside to close</p>
+          </form>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
         <dialog id="my_modal_2" class="modal">
           <div class="modal-box">
             <h3 class="font-bold text-lg">Masukkan pilihan</h3>
-
             <div class="form-control flex justify-center">
               <div class="flex justify-center">
                 <select
@@ -74,7 +109,6 @@ export default function Opt() {
                   <option disabled selected>
                     Pilih Kategori
                   </option>
-                  {/* Render opsi dropdown berdasarkan data kategori */}
                   {categories.map((category) => (
                     <option
                       key={category.id_category}
