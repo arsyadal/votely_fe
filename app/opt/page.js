@@ -41,8 +41,8 @@ export default function Opt() {
       );
       refresh();
     } catch (error) {
-      console.error("Login error:", error);
-      alert("Login failed! Incorrect email or password.");
+      console.error("Create category error:", error);
+      alert("Create category failed!");
     }
   };
 
@@ -69,7 +69,7 @@ export default function Opt() {
       <div class="flex justify-center">
         <button
           class="btn"
-          onClick={() => document.getElementById("my_modal_2").showModal()}
+          onClick={() => document.getElementById("my_modal_3").showModal()}
         >
           Tambah
         </button>
@@ -97,7 +97,7 @@ export default function Opt() {
             <button>close</button>
           </form>
         </dialog>
-        <dialog id="my_modal_2" class="modal">
+        <dialog id="my_modal_3" class="modal">
           <div class="modal-box">
             <h3 class="font-bold text-lg">Masukkan pilihan</h3>
             <div class="form-control flex justify-center">
@@ -114,7 +114,7 @@ export default function Opt() {
                       key={category.id_category}
                       value={category.id_category}
                     >
-                      {category.name_category}
+                      {category.name}
                     </option>
                   ))}
                 </select>
