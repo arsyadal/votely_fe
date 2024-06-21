@@ -15,6 +15,11 @@ export default function Opt() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const {
+    register: registerPolling,
+    handleSubmit: handleSubmitPolling,
+    formState: { errors: errorsPolling },
+  } = useForm();
   const { refresh } = useRouter();
 
   useEffect(() => {
@@ -90,6 +95,7 @@ export default function Opt() {
         <button className="btn ml-3" onClick={() => document.getElementById("my_modal_2").showModal()}>
           Tambah Kategori
         </button>
+
         <dialog id="my_modal_2" className="modal">
           <form className="modal-box" onSubmit={handleSubmit(onSubmitCategory)}>
             <h3 className="font-bold text-lg">Tambah Kategori</h3>
@@ -103,17 +109,18 @@ export default function Opt() {
             <button>close</button>
           </form>
         </dialog>
+
         <dialog id="my_modal_3" className="modal">
-          <form className="modal-box" onSubmit={handleSubmit(onSubmitPolling)}>
+          <form className="modal-box" onSubmit={handleSubmitPolling(onSubmitPolling)}>
             <h3 className="font-bold text-lg">Masukkan pilihan</h3>
             <div className="form-control flex justify-center">
               <div className="flex justify-center">
-                <select {...register("category_id")} className="select select-bordered w-full max-w-xs">
+                <select {...registerPolling("category_id")} className="select select-bordered w-full max-w-xs">
                   <option disabled selected>
                     Pilih Kategori
                   </option>
                   {categories.map((category) => (
-                    <option key={category.id_category} value={category.id_category}>
+                    <option key={category.category_id} value={category.category_id}>
                       {category.name}
                     </option>
                   ))}
@@ -126,7 +133,7 @@ export default function Opt() {
             </div>
             <div className="flex justify-center">
               <label className="input input-bordered flex w-96 items-center gap-1 justify-center">
-                <input {...register("name")} type="text" className="grow" placeholder="Isi nama..." />
+                <input {...registerPolling("name")} type="text" className="grow" placeholder="Isi nama..." />
               </label>
             </div>
             <div className="mb-2 mt-5 flex justify-center">
@@ -134,7 +141,7 @@ export default function Opt() {
             </div>
             <div className="flex justify-center">
               <label className="input input-bordered flex w-96 items-center gap-1 justify-center">
-                <input {...register("description")} type="text" className="grow" placeholder="Isi deskripsi..." />
+                <input {...registerPolling("description")} type="text" className="grow" placeholder="Isi deskripsi..." />
               </label>
             </div>
 
@@ -143,7 +150,7 @@ export default function Opt() {
             </div>
             <div className="flex justify-center">
               <label className="input input-bordered flex w-96 items-center gap-2">
-                <input {...register("image_url")} type="text" className="grow" />
+                <input {...registerPolling("image_url")} type="text" className="grow" />
               </label>
             </div>
             {/* Deadline Input */}
@@ -152,13 +159,13 @@ export default function Opt() {
             </div>
             <div class="flex justify-center">
               <label class="input input-bordered flex w-96 items-center gap-2">
-                <input {...register("deadline_at")} type="datetime-local" class="grow" />
+                <input {...registerPolling("deadline_at")} type="datetime-local" class="grow" />
               </label>
             </div>
             <br />
             <div className="flex justify-center">
               <button className="btn bg-black text-white" type="submit">
-                Submit
+                DSADASA
               </button>
             </div>
           </form>
