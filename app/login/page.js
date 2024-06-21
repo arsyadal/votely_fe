@@ -15,10 +15,7 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/login",
-        data
-      );
+      const response = await axios.post("http://localhost:3001/api/login", data);
       const accessToken = response.data?.data?.access_token;
       const refreshToken = response.data?.data?.refresh_token;
       const refresh = await axios.post(
@@ -44,21 +41,13 @@ export default function Login() {
 
   return (
     <div>
-      <link
-        href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
-        rel="stylesheet"
-        type="text/css"
-      />
+      <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
       <script src="https://cdn.tailwindcss.com"></script>
       <div class="hero min-h-screen bg-base-200">
         <div class="hero-content flex-col lg:flex-row-reverse">
           <div class="text-center lg:text-left">
             <h1 class="text-5xl font-bold text-black">Login With SSO!</h1>
-            <p class="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
+            <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
           </div>
           <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form class="card-body" onSubmit={handleSubmit(onSubmit)}>
@@ -66,24 +55,14 @@ export default function Login() {
                 <label class="label">
                   <span class="label-text">Email</span>
                 </label>
-                <input
-                  {...register("email", { required: true })}
-                  type="email"
-                  placeholder="email"
-                  class="input input-bordered"
-                />
+                <input {...register("email", { required: true })} type="email" placeholder="email" class="input input-bordered" />
                 {errors.email && <p>Email is required.</p>}
               </div>
               <div class="form-control">
                 <label class="label">
                   <span class="label-text">Password</span>
                 </label>
-                <input
-                  {...register("password", { required: true })}
-                  type="password"
-                  placeholder="password"
-                  class="input input-bordered"
-                />
+                <input {...register("password", { required: true })} type="password" placeholder="password" class="input input-bordered" />
                 {errors.password && <p>Password is required.</p>}
               </div>
               <p>
