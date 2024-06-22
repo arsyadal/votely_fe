@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function Opt() {
   const [categories, setCategories] = useState([]);
-  const [pollingId, setPollingId] = useState([]); // [{}
+  // const [polling setPolling] = useState([]); // [{}
   const [successAlert, setSuccessAlert] = useState(false);
   const { access_token } = parseCookies();
   const {
@@ -43,36 +43,29 @@ export default function Opt() {
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get("http://localhost:3001/api/polling/:polling_id/option", {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        });
-        setPollingId(data?.data || []);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.error("Axios error:", error.response?.data);
-        } else {
-          console.error("Unexpected error:", error);
-        }
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   const getPollings = async () => {
+  //     try {
+  //       const data = await fetchAllPollings();
+  //       setPollings(data);
+  //     } catch (error) {
+  //       console.error('Failed to fetch pollings:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  const onSubmit = (data) => console.log(data);
+  //   getPollings();
+  // }, []);
 
   // useEffect(() => {
-  //   const fetchData = async () => {
+  //   (async () => {
   //     try {
-  //       const { data } = await axios.get("http://localhost:3001/api/polling", {
+  //       const { data } = await axios.get("http://localhost:3001/api/polling/:polling_id/option", {
   //         headers: {
   //           Authorization: `Bearer ${access_token}`,
   //         },
   //       });
-  //       console.log("Polling data:", data?.data);
   //       setPolling(data?.data || []);
   //     } catch (error) {
   //       if (axios.isAxiosError(error)) {
@@ -81,10 +74,32 @@ export default function Opt() {
   //         console.error("Unexpected error:", error);
   //       }
   //     }
-  //   };
+  //   })();
+  // }, []);
 
-  //   fetchData();
-  // }, [access_token]);
+  const onSubmit = (data) => console.log(data);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3001/api/polling/:polling_id/option", {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
+        console.log("Polling data:", data?.data);
+        setPolling(data?.data || []);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error("Axios error:", error.response?.data);
+        } else {
+          console.error("Unexpected error:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [access_token]);
 
   const onSubmitCategory = async ({ category }) => {
     try {
@@ -128,10 +143,9 @@ export default function Opt() {
   const onSubmitOption = async ({ image_url, name, owner_id, polling_id }) => {
     console.log({ image_url, name, owner_id, polling_id });
 
-    
     try {
       await axios.post(
-        "http://localhost:3001/api/polling/:polling_id/option",
+        "http://localhost:3001/api/polling/2/option/",
         { image_url, name, owner_id, polling_id },
         {
           headers: {
@@ -253,36 +267,8 @@ export default function Opt() {
         <dialog id="my_modal_4" className="modal">
           <form className="modal-box" onSubmit={handleSubmitOption(onSubmitOption)}>
             <h3 className="font-bold text-lg">Buat option</h3>
-
-            {/* <div className="form-control flex justify-center"> */}
-            {/* <div className="flex justify-center">
-                <select {...registerOption("polling_id")} className="select select-bordered w-full max-w-xs">
-                  <option disabled selected>
-                    Pilih Polling
-                  </option>
-                  {polling.map((polling) => (
-                    <option key={polling.polling_id} value={polling.polling_id}>
-                      {polling.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div> */}
-            {/* <div className="mb-2 mt-5 flex justify-center">
-              <h1 className="font-bold text-xl">polling id</h1>
-            </div> */}
-            {/* <div className="flex justify-center">
-              <label className="input input-bordered flex w-96 items-center gap-1 justify-center">
-                <input {...registerOption("polling_id")} type="text" className="grow" placeholder="Isi polling id..." />
-              </label>
-            </div> */}
             <div className="mb-2 mt-5 flex justify-center">
               <h1 className="font-bold text-xl"></h1>
-            </div>
-            <div className="flex justify-center">
-              <label className="input input-bordered flex w-96 items-center gap-1 justify-center">
-                <input {...registerOption("polling_id")} type="text" className="grow" />
-              </label>
             </div>
             <div className="mb-2 mt-5 flex justify-center">
               <h1 className="font-bold text-xl">Nama</h1>
@@ -292,12 +278,12 @@ export default function Opt() {
                 <input {...registerOption("name")} type="text" className="grow" placeholder="Isi nama..." />
               </label>
             </div>
-            <div className="mb-2 mt-5 flex justify-center">owner id</div>
+            {/* <div className="mb-2 mt-5 flex justify-center">owner id</div>
             <div className="flex justify-center">
               <label className="input input-bordered flex w-96 items-center gap-1 justify-center">
                 <input {...registerOption("owner_id")} type="text" className="grow" />
               </label>
-            </div>
+            </div> */}
 
             <div className="flex justify-center mt-2 mb-2">
               <h1 className="font-bold text-xl">Gambar</h1>
