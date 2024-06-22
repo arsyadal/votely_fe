@@ -78,6 +78,12 @@ const Homepage = () => {
             ))}
           </div>
         </div>
+
+        <div class="flex justify-center">
+          <a href="/opt" class="btn bg-black text-white">
+            Buat Polling
+          </a>
+        </div>
       </div>
     </div>
   );
