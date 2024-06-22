@@ -16,6 +16,27 @@ function VoteCard({ onVote }) {
     }
   };
 
+  const [options, setOptions] = useState([]);
+  const [error, setError] = useState(null);
+  const { push } = useRouter();
+
+  useEffect(() => {
+    const fetchPollings = async () => {
+      try {
+        const cookies = parseCookies();
+        const accessToken = cookies.access_token;
+
+        if (!accessToken) {
+          push("/login"); // Redirect to login if access token is not present
+          return;
+        }
+
+        const response = await axios.get("http://localhost:3001/api/polling/{$option_id}/option", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
   // Calculate total votes
   const totalVotes = votes.reduce((acc, curr) => acc + curr, 0);
 
@@ -43,7 +64,7 @@ function VoteCard({ onVote }) {
             <img src="" alt="Shoes" />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">BATMAN</h2>
+            <h2 className="card-title"></h2>
             <progress className="progress progress-black w-56" value={percentageVotes0} max="100"></progress>
 
             <p>Votes: {votes[0]}</p>
@@ -60,7 +81,7 @@ function VoteCard({ onVote }) {
             <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">SUPERMAN</h2>
+            <h2 className="card-title">{option.name}</h2>
             <progress className="progress progress-black w-56" value={percentageVotes1} max="100"></progress>
 
             <p>Votes: {votes[1]}</p>
@@ -68,16 +89,6 @@ function VoteCard({ onVote }) {
               <button className="btn bg-black text-white" onClick={() => handleVote(1)}>
                 Pilih
               </button>
-
-              <dialog id="my_modal_2" className="modal">
-                <div className="modal-box">
-                  <h3 className="font-bold text-lg">Selamat !</h3>
-                  <p className="py-4">Anda berhasil memilih, Press ESC key or click outside to close</p>
-                </div>
-                <form method="dialog" className="modal-backdrop">
-                  <button>close</button>
-                </form>
-              </dialog>
             </div>
           </div>
         </div>
