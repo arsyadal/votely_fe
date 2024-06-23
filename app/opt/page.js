@@ -43,40 +43,6 @@ export default function Opt() {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   const getPollings = async () => {
-  //     try {
-  //       const data = await fetchAllPollings();
-  //       setPollings(data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch pollings:', error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   getPollings();
-  // }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const { data } = await axios.get("http://localhost:3001/api/polling/:polling_id/option", {
-  //         headers: {
-  //           Authorization: `Bearer ${access_token}`,
-  //         },
-  //       });
-  //       setPolling(data?.data || []);
-  //     } catch (error) {
-  //       if (axios.isAxiosError(error)) {
-  //         console.error("Axios error:", error.response?.data);
-  //       } else {
-  //         console.error("Unexpected error:", error);
-  //       }
-  //     }
-  //   })();
-  // }, []);
-
   const onSubmit = (data) => console.log(data);
 
   useEffect(() => {

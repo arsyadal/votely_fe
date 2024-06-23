@@ -1,17 +1,17 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { parseCookies } from "nookies";
-import Link from "next/link";
 
-const Homepage = ({ params }) => {
-  const [pollings, setPollings] = useState([]);
+export default function Vote({ params }) {
+  const [options, setOptions] = useState([]);
   const [error, setError] = useState(null);
   const { push } = useRouter();
 
   useEffect(() => {
-    const fetchPollings = async () => {
+    const fetchOptions = async () => {
       try {
         const cookies = parseCookies();
         const accessToken = cookies.access_token;
@@ -21,20 +21,19 @@ const Homepage = ({ params }) => {
           return;
         }
 
-        const response = await axios.get("http://localhost:3001/api/polling", {
+        const response = await axios.get("http://localhost:3001/api/option", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
 
-        setPollings(response.data.data);
+        setOptions(response.data.data);
       } catch (error) {
-        console.error("Error fetching pollings:", error);
-        setError("Failed to fetch pollings. Please try again later.");
+        console.error("Error fetching options:", error);
+        setError("Failed to fetch options. Please try again later.");
       }
     };
-
-    fetchPollings();
+    fetchOptions();
   }, [push]);
 
   if (error) {
@@ -43,6 +42,7 @@ const Homepage = ({ params }) => {
 
   return (
     <div>
+      {" "}
       <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
       <script src="https://cdn.tailwindcss.com"></script>
       <div className="navbar bg-black text-white">
@@ -52,25 +52,24 @@ const Homepage = ({ params }) => {
           </a>
         </div>
         <div className="navbar-end"></div>
+        My v ote: {params.slug}
       </div>
-
       <div className="flex justify-center mt-8">
-        <h1 className="text-center text-4xl font-bold">POLLING TERKINI</h1>
+        <h1 className="text-center text-4xl font-bold">LAKUKAN VOTING</h1>
       </div>
-
       <div className="flex justify-center space-x-4 p-4">
         <div className="card w-96 bg-base-100 shadow-lg">
-          <div className="polling-list">
-            {pollings.map((polling) => (
-              <div key={polling.id} className="polling-item">
+          <div className="option-list">
+            {options.map((option) => (
+              <div key={option.id} className="option-item">
                 <div className="card-body">
-                  <h1 className="text-2xl font-bold mb-4">{polling.name}</h1>
-                  <p className="mb-4">{polling.description}</p>
+                  <h1 className="text-2xl font-bold mb-4">{option.name}</h1>
+                  <p className="mb-4">{option.description}</p>
                   <figure>
-                    <img src={polling.image_url || "https://img.daisyui.com/images/stock/photo-default.png"} alt={polling.name} className="rounded-lg" />
+                    <img src={option.image_url || "https://img.daisyui.com/images/stock/photo-default.png"} alt={option.name} className="rounded-lg" />
                   </figure>
                   <div className="card-actions mt-4">
-                    <a href={`/vote/${polling.polling_id}`} className="btn btn-neutral w-full">
+                    <a href={``} className="btn btn-neutral w-full">
                       Vote Now
                     </a>
                   </div>
@@ -79,15 +78,7 @@ const Homepage = ({ params }) => {
             ))}
           </div>
         </div>
-
-        <div class="flex justify-center">
-          <a href="/opt" class="btn bg-black text-white">
-            Buat Polling
-          </a>
-        </div>
       </div>
     </div>
   );
-};
-
-export default Homepage;
+}
